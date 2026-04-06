@@ -3,7 +3,7 @@ class Arithmatic{
     void display(){
     Scanner sc = new Scanner(System.in);
 
-    System.out.println("Enter Your age:");
+    System.out.print("Enter Your age:");
     int age = sc.nextInt();
     System.out.println("Your age is :" + age);
 
