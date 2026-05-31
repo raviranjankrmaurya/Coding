@@ -27,3 +27,8 @@ print(f"price is ₹{price}")
 isPresent = True;
 print(f"Ravi is present in class :{isPresent}")
 
+# seperator
+print(10,45,sep=':')
+print('rav'*3)
+
+
