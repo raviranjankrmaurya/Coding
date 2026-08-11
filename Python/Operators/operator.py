@@ -108,8 +108,21 @@ else:
 print("\n--- Unpacking Operator ---")
 values = [1, 2, 3]
 print("Unpacked values:", *values)
+# ---------------------------------1
+def show(name, age):
+    print(name, age)
+
+person = {"name": "Ravi", "age": 21}
+
+show(**person)
 
 # -------------------------------
 # End of Program
 # -------------------------------
 print("\nProgram Completed Successfully!")
+
+
+# NOTE:
+# :=   → value assign + immediately use
+# *    → iterable unpacking(like -> list,tuple,set,etc)
+# **   → dictionary unpacking
