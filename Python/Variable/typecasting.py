@@ -2,12 +2,12 @@
 
 name = "ravi"
 age = 20
-isStudent = True
+is_Student = True
 gpa = 7.8
 
 print(type(name))
 print(type(age))
-print(type(isStudent))
+print(type(is_Student))
 print(type(gpa))
 print(f"add 2 in your age {age + 2}")
 
