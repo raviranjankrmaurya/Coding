@@ -11,6 +11,7 @@ fn main() {
     // - type can be inferred by Rust
 
     let age = 21;
+    // age = 22; throw error because age is immutable
 
     println!("Age: {}", age);
 
@@ -21,15 +22,18 @@ fn main() {
 
     // Mutable Variables:
     // - created using `let mut`
-    // - value can be changed
+    // - value can be changed ,not datatypes
     // - type can be inferred
     // - useful when data needs modification
 
     let mut marks = 80;
 
-    marks = 90;
+    marks = 90; // it's possible with mut keyword
 
     println!("Marks: {}", marks);
+
+    // let mut name = "Ravi";
+    // name = name.len(); // here you change data type thai is not possible , it,s possible using shadowing
 
 
     // ============================================================
@@ -89,15 +93,21 @@ fn main() {
     // - creates a new variable with the same name
     // - old variable is hidden
     // - can change the variable's type
+    // - can also use previous value of variable
     // - uses `let` again
 
     let x = 10;
+    println!("{}",x);
+    
+    let x = 20 + x; // here use previous value of x
+    println!("{}",x);
 
-    let x = 20;
-
-    let x = "Rust";
+    let x = "Rust"; // here changed, datatype of x
 
     println!("x: {}", x);
+
+    let x = x.len();
+    println!("after shadowing: {}",x); // here change data type
 
 
     // ============================================================
