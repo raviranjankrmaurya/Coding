@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SubStringPractice",
+            "request": "launch",
+            "mainClass": "java.string.SubStringPractice",
+            "projectName": "Coding_8d1503ec"
+        },
+        {
+            "type": "java",
+            "name": "SubString",
+            "request": "launch",
+            "mainClass": "java.string.SubString",
+            "projectName": "Coding_8d1503ec"
+        },
+        {
+            "type": "java",
+            "name": "SubString",
+            "request": "launch",
+            "mainClass": "string.SubString",
+            "projectName": "Coding_8d1503ec"
+        },
+        {
+            "type": "java",
+            "name": "SubString",
+            "request": "launch",
+            "mainClass": "java.string.SubString.SubString",
+            "projectName": "Coding_8d1503ec"
+        },
+        {
+            "type": "java",
             "name": "basic",
             "request": "launch",
             "mainClass": "basic",

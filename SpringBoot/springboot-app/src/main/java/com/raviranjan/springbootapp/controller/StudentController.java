@@ -14,8 +14,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.raviranjan.springbootapp.dto.CreateStudentRequestDto;
+import com.raviranjan.springbootapp.dto.CreateStudentResponseDto;
+import com.raviranjan.springbootapp.dto.UpdateStudentRequestDto;
+import com.raviranjan.springbootapp.dto.UpdateStudentResponseDto;
 import com.raviranjan.springbootapp.entity.Student;
 import com.raviranjan.springbootapp.service.StudentService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/students")
@@ -27,28 +33,28 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-        Student createdStudent = studentService.createStudent(student);
+    @PostMapping
+    public ResponseEntity<CreateStudentResponseDto> createStudent(@Valid @RequestBody CreateStudentRequestDto studentRequestDto){
+        CreateStudentResponseDto createdStudent = studentService.createStudent(studentRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
 
     }
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id){
-        Student getStudent = studentService.getStudent(id);
-        if(getStudent == null){
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<CreateStudentResponseDto> getStudent(@PathVariable Long id){
+        CreateStudentResponseDto getStudent = studentService.getStudent(id);
+        // if(getStudent == null){
+        //     // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        //     return ResponseEntity.notFound().build();
+        // }
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(getStudent);
     }
 
 
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Student>> getAllStudent(){
-        List<Student> studentsList = studentService.getAllStudent();
+    @GetMapping
+    public ResponseEntity<List<CreateStudentResponseDto>> getAllStudent(){
+        List<CreateStudentResponseDto> studentsList = studentService.getAllStudent();
         if(studentsList.isEmpty()){
             // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             return ResponseEntity.notFound().build();
@@ -57,9 +63,9 @@ public class StudentController {
     }
 
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student student){
-        Student updatedStudent = studentService.updateStudent(id,student);
+    @PutMapping("/{id}")
+    public ResponseEntity<UpdateStudentResponseDto> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequestDto updateStudentRequestDto){
+        UpdateStudentResponseDto updatedStudent = studentService.updateStudent(id,updateStudentRequestDto);
         if(updatedStudent == null){
             // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             return ResponseEntity.notFound().build();
@@ -69,13 +75,22 @@ public class StudentController {
                 .body(updatedStudent);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
         Boolean isDelete = studentService.deleteStudent(id);
         if(!isDelete){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok("Record deleted");
+    }
+
+    @PatchMapping("/delete-soft/{id}")
+    public ResponseEntity<String> deleteSoft(@PathVariable Long id){
+        Boolean isSoftDeleted = studentService.deleteSoftly(id);
+        if(!isSoftDeleted){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok("Record Soft deleted!");
     }
     
 }
