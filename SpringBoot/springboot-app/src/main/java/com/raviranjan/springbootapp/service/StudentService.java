@@ -60,21 +60,18 @@ public class StudentService {
     }
 
     public UpdateStudentResponseDto updateStudent(Long id, UpdateStudentRequestDto upstudent){
-        Optional<Student> existingStudent = studentRepository.findByIdAndDeletedIsFalse(id);
-        if(existingStudent.isEmpty()){
-            return null;
-        }
-        Student studentToSave = existingStudent.get();
+        Student existingStudent = studentRepository.findByIdAndDeletedIsFalse(id).orElseThrow( () -> new ResourseNotFoundException("Student with id " + id + " Not Found!"));
+        
 
-        studentToSave.setName(upstudent.getName());
-        studentToSave.setAge(upstudent.getAge());
-        // studentToSave.setEmail(upstudent.getEmail());
-        studentToSave.setRollNo(upstudent.getRollNo());
-        studentToSave.setSubject(upstudent.getSubject());
-        // studentToSave.setDeleted(false);
-        studentToSave.setUpdatedAt(LocalDateTime.now());
+        existingStudent.setName(upstudent.getName());
+        existingStudent.setAge(upstudent.getAge());
+        // existingStudent.setEmail(upstudent.getEmail());
+        existingStudent.setRollNo(upstudent.getRollNo());
+        existingStudent.setSubject(upstudent.getSubject());
+        // existingStudent.setDeleted(false);
+        existingStudent.setUpdatedAt(LocalDateTime.now());
 
-        Student upStuResDto =  studentRepository.save(studentToSave);
+        Student upStuResDto =  studentRepository.save(existingStudent);
 
         return updateMapToDto(upStuResDto);
 
@@ -83,22 +80,29 @@ public class StudentService {
         
     }
 
-    public Boolean deleteStudent(Long id){
-            Boolean isStudent =  studentRepository.existsById(id);
-            if(!isStudent) return false;
-            studentRepository.deleteById(id);
-            return true;
+    public void deleteStudent(Long id){
+            // Boolean isStudent = studentRepository.existsById(id);
+            Student studentToBeDeleted =  studentRepository.findById(id).orElseThrow(() -> new ResourseNotFoundException("Student with id " + id + " Not Found!"));
+            // if(!isStudent) return false;
+            // studentRepository.deleteById(id);
+
+            studentRepository.delete(studentToBeDeleted);
+            // return true;
         }
 
-    public Boolean deleteSoftly(Long id){
-        Optional<Student> existingStudent = studentRepository.findByIdAndDeletedIsFalse(id);
-        if(existingStudent.isEmpty()){
-            return false;
-        }
-        Student saveToStudent = existingStudent.get();
-        saveToStudent.setDeleted(true);
-        studentRepository.save(saveToStudent);
-        return true;
+    public void deleteSoftly(Long id){
+        // Optional<Student> existingStudent = studentRepository.findByIdAndDeletedIsFalse(id);
+        // if(existingStudent.isEmpty()){
+        //     return false;
+        // }
+        Student studentToBeDeleted =  studentRepository.findByIdAndDeletedIsFalse(id).orElseThrow(() -> new ResourseNotFoundException("Student with id " + id + " Not Found!"));
+        studentRepository.delete(studentToBeDeleted);
+
+
+        // Student saveToStudent = existingStudent.get();
+        studentToBeDeleted.setDeleted(true);
+        studentRepository.save(studentToBeDeleted);
+        // return true;
     }
 
 

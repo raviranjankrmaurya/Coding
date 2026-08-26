@@ -55,10 +55,10 @@ public class StudentController {
     @GetMapping
     public ResponseEntity<List<CreateStudentResponseDto>> getAllStudent(){
         List<CreateStudentResponseDto> studentsList = studentService.getAllStudent();
-        if(studentsList.isEmpty()){
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            return ResponseEntity.notFound().build();
-        }
+        // if(studentsList.isEmpty()){
+        //     // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        //     return ResponseEntity.notFound().build();
+        // }
         return ResponseEntity.ok(studentsList);
     }
 
@@ -66,10 +66,10 @@ public class StudentController {
     @PutMapping("/{id}")
     public ResponseEntity<UpdateStudentResponseDto> updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequestDto updateStudentRequestDto){
         UpdateStudentResponseDto updatedStudent = studentService.updateStudent(id,updateStudentRequestDto);
-        if(updatedStudent == null){
-            // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            return ResponseEntity.notFound().build();
-        }
+        // if(updatedStudent == null){
+        //     // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        //     return ResponseEntity.notFound().build();
+        // }
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedStudent);
@@ -77,20 +77,25 @@ public class StudentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteStudent(@PathVariable Long id){
-        Boolean isDelete = studentService.deleteStudent(id);
-        if(!isDelete){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok("Record deleted");
+        // Boolean isDelete = studentService.deleteStudent(id);
+        // if(!isDelete){
+        //     return ResponseEntity.notFound().build();
+        // }
+        studentService.deleteStudent(id);
+        // return ResponseEntity.ok("Record deleted");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); // or ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/delete-soft/{id}")
     public ResponseEntity<String> deleteSoft(@PathVariable Long id){
-        Boolean isSoftDeleted = studentService.deleteSoftly(id);
-        if(!isSoftDeleted){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok("Record Soft deleted!");
+        // Boolean isSoftDeleted = studentService.deleteSoftly(id);
+        studentService.deleteSoftly(id);
+        // if(!isSoftDeleted){
+        //     return ResponseEntity.notFound().build();
+        // }
+        // return ResponseEntity.ok("Record Soft deleted!");
+
+        return ResponseEntity.noContent().build();
     }
     
 }
